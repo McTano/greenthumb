@@ -1,11 +1,10 @@
 class User:
-    def __init__(self, start, dest, isDriver, seats, vehicle, endTime, id):
+    def __init__(self, start, dest, isDriver, seats, vehicle, endTime):
         self.start = start
         self.dest = dest
         self.isDriver = isDriver
         self.seats = seats
         self.vehicle = vehicle
-        self.id = id
         self.ride = None
         self.endTime = endTime
 
