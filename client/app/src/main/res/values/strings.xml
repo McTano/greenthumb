@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">GreenThumbClient</string>
+
+    <!-- Strings for UI prompts -->
+
+    <string name="usertyperequeststring">Are you a driver or a rider?</string>
+    <string name="driverbuttonstring">Driver</string>
+    <string name="riderbuttonstring">Rider</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
