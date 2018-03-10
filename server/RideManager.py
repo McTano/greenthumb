@@ -23,10 +23,10 @@ class RideManager:
         if RideManager._instance is not None:
             raise Exception("There is already an instance!")
         else:
-            self._riders = {1: User(Location("3780 Arbutus", 49.2474624, -123.1532338),
+            self._riders = {200: User(Location("3780 Arbutus", 49.2474624, -123.1532338),
                                     Location("6133 University", 49.2664779, -123.2520534),
                                     False, None, None, 9),
-                            2: User(Location("800 Robson", 49.2819229, -123.1211844),
+                            300: User(Location("800 Robson", 49.2819229, -123.1211844),
                                     Location("6133 University", 49.2664779, -123.2520534),
                                     False, None, None, 9)}
             self._drivers = {}

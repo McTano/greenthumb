@@ -37,7 +37,7 @@ def add_user():
 @app.route("/users/<user_id>")
 def get_user(user_id):
 	user = rideManager.get_user(int(user_id))
-	resp = json.dumps(user)
+	resp = rideManager.json_repr(user)
 	return resp
 
 # @app.route("/rides", methods=['GET'])
