@@ -6,7 +6,6 @@ from .Query import Query
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-
 class RideManager:
     _instance = None
     _riders = set()
