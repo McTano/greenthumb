@@ -29,14 +29,20 @@ class RideManager:
                             300: User(Location("800 Robson", 49.2819229, -123.1211844),
                                     Location("6133 University", 49.2664779, -123.2520534),
                                     False, None, None, 9)}
-            self._drivers = {}
+            self._drivers = {
+                400: User(Location("6800 Cambie", 49.227107, 123.1163085),
+                Location("6133 University", 49.2664779, -123.2520534),
+                True, 4, "911 DAFUZZ", 9),
+            }
             RideManager._instance = self
+            self.find_rides()
 
     def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
         if isDriver:
             self._drivers[id] = User(start, dest, isDriver, seats, vehicle, endTime)
         else:
             self._riders[id] = User(start, dest, isDriver, seats, vehicle, endTime)
+        self.find_rides()
 
     def get_user(self, id):
         if id in self._riders:
@@ -52,31 +58,14 @@ class RideManager:
         self.parse_response(response)
 
     def create_query(self):
-        drivers = set()
-        riders = set()
-        for driver in self._drivers:
-            drivers.add(Driver(driver.start, driver.dest, driver.time, driver.seats))
-        for rider in self._riders:
-            riders.add(Rider(rider.start, rider.time))
-        return Query(drivers, riders)
+        drivers = {}
+        riders = {}
+        for key, driver in self._drivers.items():
+            drivers[key] = Driver(driver.start, driver.dest, driver.endTime, driver.seats)
+        for key, rider in self._riders.items():
+            riders[key] = Rider(rider.start, rider.endTime)
+        return Query(riders, drivers)
 
-    def send_request(self, query):
-        url = 'https://api.routific.com/v1/vrp/post'
-        headers = {"Content-Type": "application/json",
-                   "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWE0MmQwMjI0MTNkZjE3MGQ2MmU5YTUiLCJpYXQiOjE1MjA3MDg4NjZ9.Oq9hYvFMDhJkU34tZ5Skf0gyIKaF8Wk2cg5YTYNywME"}
-        request = Request(url, data=urlencode(query).encode(), headers=headers)
-        return urlopen(request).read().decode()
-
-    def parse_response(self, response):
-        parsed_json = json.load(response)
-        solution = parsed_json["solution"]
-        for name, route in solution.iteritems():
-            ride = Ride(self._drivers[name])
-            for stop in route:
-                ride.stops.append([stop["location_name"], stop["arrival_time"]])
-                ride.end_time = stop["arrival_time"]
-                if ("end" or "start") not in stop["location_id"]:
-                    self._riders[stop["location_id"]].ride = ride
 
     def json_repr(self, obj):
         """Represent instance of a class as JSON.
@@ -94,6 +83,8 @@ class RideManager:
                 for key in obj:
                     obj[key] = serialize(obj[key])
                 return obj
+            # elif isinstance(obj, set):
+            #     return [serialize(item) for item in obj]
             elif isinstance(obj, list):
                 return [serialize(item) for item in obj]
             elif isinstance(obj, tuple):
@@ -104,3 +95,23 @@ class RideManager:
                 return repr(obj)  # Don't know how to handle, convert to string
 
         return json.dumps(serialize(obj))
+
+    def send_request(self, query):
+        url = 'https://api.routific.com/v1/vrp'
+        headers = {"Content-Type": "application/json",
+                   "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWE0MmQwMjI0MTNkZjE3MGQ2MmU5YTUiLCJpYXQiOjE1MjA3MDg4NjZ9.Oq9hYvFMDhJkU34tZ5Skf0gyIKaF8Wk2cg5YTYNywME"}
+        request = Request(url, data=self.json_repr(query).encode(), headers=headers)
+        print(self.json_repr(query))
+        return urlopen(request).read().decode()
+
+    def parse_response(self, response):
+        parsed_json = json.load(response)
+        solution = parsed_json["solution"]
+        for name, route in solution.items():
+            ride = Ride(self._drivers[name])
+            for stop in route:
+                ride.stops.append([stop["location_name"], stop["arrival_time"]])
+                ride.end_time = stop["arrival_time"]
+                if ("end" or "start") not in stop["location_id"]:
+                    self._riders[stop["location_id"]].ride = ride
+
