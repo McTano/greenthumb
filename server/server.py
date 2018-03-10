@@ -3,6 +3,7 @@ from .RideManager import RideManager
 from flask import Flask
 from flask import request
 from flask import json
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -33,11 +34,11 @@ def add_user():
 	# return "putted"
 	return json.dumps(request.json)
 
-@app.route("/users")
-def get_user():
-	# return "getted"
-	return json.dumps(request.json)
-	# rideManager.get_user(request.json.user_id)
+@app.route("/users/<user_id>")
+def get_user(user_id):
+	user = rideManager.get_user(int(user_id))
+	resp = json.dumps(user)
+	return resp
 
 # @app.route("/rides", methods=['GET'])
 # def findRides():
