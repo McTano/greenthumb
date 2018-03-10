@@ -8,12 +8,8 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 import json
 
-
 class RideManager:
     _instance = None
-    _riders = set()
-    _drivers = set()
-    _rides = set()
 
     @staticmethod
     def get_instance():
@@ -25,12 +21,26 @@ class RideManager:
         if RideManager._instance is not None:
             raise Exception("There is already an instance!")
         else:
+            self._riders = {}
+            self._drivers = {}
             RideManager._instance = self
 
-    # lat lon, address, datetime
-    def add_request(self, lat, lon, address, dateTime, isDriver):
 
-        usr = User()
+    def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
+        if isDriver:
+            self._drivers[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
+            self._drivers.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
+            #should work
+        else:
+            self._riders[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
+
+    def get_user(self, id):
+        if id in self._riders:
+            return self._riders.get(id)
+        if id in self._drivers:
+            return self._drivers.get(id)
+        else:
+            return None
 
     def find_rides(self):
         query = self.create_query()
