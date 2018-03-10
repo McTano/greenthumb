@@ -7,6 +7,36 @@
     <string name="driverbuttonstring">Driver</string>
     <string name="riderbuttonstring">Rider</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setlocationbutton">Set Location</string>
+    <string name="setlocationprompt">Where are we picking you up?</string>
+    <string name="setarrivalprompt">When would you like to arrive?</string>
+    <string name="confirmbutton">Confirm</string>
+
+    <string-array name="time_array">
+        <item>8:00 am</item>
+        <item>9:00 am</item>
+        <item>10:00 am</item>
+        <item>11:00 am</item>
+        <item>12:00 pm</item>
+        <item>1:00 pm</item>
+        <item>2:00 pm</item>
+        <item>3:00 pm</item>
+        <item>4:00 pm</item>
+        <item>5:00 pm</item>
+        <item>6:00 pm</item>
+        <item>7:00 pm</item>
+        <item>8:00 pm</item>
+        <item>9:00 pm</item>
+        <item>10:00 pm</item>
+        <item>11:00 pm</item>
+        <item>12:00 am</item>
+        <item>1:00 am</item>
+        <item>2:00 am</item>
+        <item>3:00 am</item>
+        <item>4:00 am</item>
+        <item>5:00 am</item>
+        <item>6:00 am</item>
+        <item>7:00 am</item>
+    </string-array>
+
 </resources>
