@@ -8,8 +8,6 @@ from urllib.request import Request, urlopen
 
 class RideManager:
     _instance = None
-    _riders = dict()
-    _drivers = dict()
 
     @staticmethod
     def get_instance():
@@ -21,13 +19,16 @@ class RideManager:
         if RideManager._instance is not None:
             raise Exception("There is already an instance!")
         else:
+            self._riders = {}
+            self._drivers = {}
             RideManager._instance = self
+
 
     def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
         if isDriver:
-            self._drivers.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
+            self._drivers[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
         else:
-            self._riders.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
+            self._riders[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
 
     def get_user(self, id):
         if id in self._riders:

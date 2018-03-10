@@ -14,12 +14,29 @@ def hello():
 
 @app.route("/users/new", methods=['PUT'])
 def add_user():
-	rideManager.add_user(request.json.user)
-	return request.json
+	user = request.json['user']
+	start = user['start']
+	dest = user['dest']
+	isDriver = user['isDriver']
+	seats = user['seats']
+	vehicle = user['vehicle']
+	endTime = user['endTime']
+	id = user['id']
+	rideManager.add_user(
+		start,
+		dest, 
+		isDriver,
+		seats,
+		vehicle,
+		endTime,
+		id)
+	# return "putted"
+	return json.dumps(request.json)
 
 @app.route("/users")
 def get_user():
-	return request.json
+	# return "getted"
+	return json.dumps(request.json)
 	# rideManager.get_user(request.json.user_id)
 
 # @app.route("/rides", methods=['GET'])
