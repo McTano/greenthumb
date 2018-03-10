@@ -1,6 +1,9 @@
 class RideRequest:
-    def __init__(self):
-        RideRequest.start
-        RideRequest.destination
-        RideRequest.user
-        RideRequest.location
+    def __init__(self, start, destination, user, time):
+        self.start
+        self.destination
+        self.user
+        self.time
+
+    def getStart(self):
+        return
