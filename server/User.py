@@ -6,7 +6,7 @@ class User:
         self.seats = seats
         self.vehicle = vehicle
         self.id = id
-        self.route = None
+        self.ride = None
         self.endTime
 
     def getId(self):
@@ -27,5 +27,8 @@ class User:
     def getEndTime(self):
         return self.endTime
 
-    def setRoute(self, route):
-        self.route = route
+    def setRide(self, ride):
+        self.ride = ride
+
+    def getRide(self):
+        return self.ride

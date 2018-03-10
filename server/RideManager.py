@@ -1,6 +1,4 @@
-from server import server
-from server import User
-from server import Ride
+from server.User import User
 
 
 
