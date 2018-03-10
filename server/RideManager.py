@@ -9,8 +9,8 @@ from urllib.request import Request, urlopen
 
 class RideManager:
     _instance = None
-    _riders = set()
-    _drivers = set()
+    _riders = dict()
+    _drivers = dict()
 
     @staticmethod
     def get_instance():
@@ -24,10 +24,19 @@ class RideManager:
         else:
             RideManager._instance = self
 
-    # lat lon, address, datetime
-    def add_request(self, lat, lon, address, dateTime, isDriver):
+    def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
+        if isDriver:
+            self._drivers.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
+        else:
+            self._riders.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
 
-        usr = User()
+    def get_user(self, id):
+        if id in self._riders:
+            return self._riders.get(id)
+        if id in self._drivers:
+            return self._drivers.get(id)
+        else:
+            return None
 
     def find_rides(self):
         query = self.create_query()
