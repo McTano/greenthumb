@@ -27,6 +27,8 @@ class RideManager:
     def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
         if isDriver:
             self._drivers[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
+            self._drivers.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
+            #should work
         else:
             self._riders[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
 
