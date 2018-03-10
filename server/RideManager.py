@@ -2,9 +2,11 @@ from .Driver import Driver
 from .User import User
 from .Rider import Rider
 from .Query import Query
+from .Ride import Ride
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+import json
 
 class RideManager:
     _instance = None
@@ -43,6 +45,7 @@ class RideManager:
     def find_rides(self):
         query = self.create_query()
         response = self.send_request(query)
+        self.parse_response(response)
 
     def create_query(self):
         drivers = set()
@@ -59,3 +62,14 @@ class RideManager:
                    "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWE0MmQwMjI0MTNkZjE3MGQ2MmU5YTUiLCJpYXQiOjE1MjA3MDg4NjZ9.Oq9hYvFMDhJkU34tZ5Skf0gyIKaF8Wk2cg5YTYNywME"}
         request = Request(url, data=urlencode(query).encode(), headers=headers)
         return urlopen(request).read().decode()
+
+    def parse_response(self, response):
+        parsed_json = json.load(response)
+        solution = parsed_json["solution"]
+        for name, route in solution.iteritems():
+            ride = Ride(self._drivers[name])
+            for stop in route:
+                ride.stops.append([stop["location_name"], stop["arrival_time"]])
+                ride.end_time = stop["arrival_time"]
+                if ("end" or "start") not in stop["location_id"]:
+                    self._riders[stop["location_id"]].ride = ride
