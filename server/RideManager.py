@@ -1,12 +1,13 @@
-from .Driver import Driver
-from .User import User
-from .Rider import Rider
-from .Query import Query
-from .Ride import Ride
-
+import json
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-import json
+
+from .Driver import Driver
+from .Query import Query
+from .Ride import Ride
+from .Rider import Rider
+from .User import User
+
 
 class RideManager:
     _instance = None
@@ -25,12 +26,10 @@ class RideManager:
             self._drivers = {}
             RideManager._instance = self
 
-
     def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
         if isDriver:
             self._drivers[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
-            self._drivers.add(id, User(start, dest, isDriver, seats, vehicle, endTime, id))
-            #should work
+            # should work
         else:
             self._riders[id] = User(start, dest, isDriver, seats, vehicle, endTime, id)
 
