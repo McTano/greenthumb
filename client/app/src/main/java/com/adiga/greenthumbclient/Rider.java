@@ -5,4 +5,10 @@ package com.adiga.greenthumbclient;
  */
 
 public class Rider extends User {
+
+    public Rider() {
+    }
+
+
+
 }
