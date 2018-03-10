@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,8 +36,15 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
     Button mLocationButton;
     Button mConfirmButton;
 
+    EditText mLicenseText;
+    Spinner mSeats;
+
     private Place mPlace;
     private boolean timeSelected;
+    private boolean licenseAdded;
+    private boolean seatsSelected;
+    private TextWatcher mLicenseWatcher;
+
 
     private static final int PLACE_PICKER_REQUEST = 1;
     OnDriverDetailsSelectedListener mListener;
@@ -44,14 +54,37 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         timeSelected = false;
+        licenseAdded = false;
+        seatsSelected = false;
 
-        View layout = inflater.inflate(R.layout.rider_choice_fragment,container, false);
+        View layout = inflater.inflate(R.layout.driver_choice_fragment,container, false);
 
         mLocationButton = (Button) layout.findViewById(R.id.setlocationbutton);
         mLocationButton.setOnClickListener(this);
 
         mConfirmButton = (Button) layout.findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(this);
+
+        mLicenseText = (EditText) layout.findViewById(R.id.plate_text);
+
+
+        mLicenseText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                licenseAdded = true;
+
+            }
+        });
 
         return layout;
     }
@@ -73,14 +106,20 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
     private void setupSpinner() {
         mSpinner = (Spinner) getView().findViewById(R.id.time_spinner);
+        mSeats = (Spinner) getView().findViewById(R.id.seat_spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.time_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_seats = ArrayAdapter.createFromResource(getContext(), R.array.seat_array, android.R.layout.simple_spinner_item);
 
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
+
+        mSeats.setAdapter(adapter_seats);
+        mSeats.setOnItemSelectedListener(this);
     }
 
 
@@ -98,12 +137,14 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
             }
 
         } else if (view.getId() == R.id.confirm_button) {
-            if (mPlace == null || timeSelected == false) {
-                Toast.makeText(getContext(),"Please select your time and location before confirming",Toast.LENGTH_SHORT).show();
+            if (mPlace == null || timeSelected == false || seatsSelected ==  false || licenseAdded == false) {
+                Toast.makeText(getContext(),"Please select all fields before confirming",Toast.LENGTH_SHORT).show();
             } else {
                 String time = mSpinner.getSelectedItem().toString();
                 String simpleTime = parseTime(time);
-                mListener.onDriverDetailsSelected(new DriverInfo(mPlace,simpleTime));
+                String license = mLicenseText.getText().toString();
+                int numSeats = Integer.parseInt(mSeats.getSelectedItem().toString());
+                mListener.onDriverDetailsSelected(new DriverInfo(mPlace,simpleTime,license,numSeats));
             }
         }
     }
@@ -134,7 +175,11 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        timeSelected = true;
+        if (view.getId() == R.id.time_spinner) {
+            timeSelected = true;
+        } else if (view.getId() == R.id.seat_spinner) {
+            seatsSelected = true;
+        }
     }
 
     @Override
@@ -151,10 +196,14 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
     public class DriverInfo {
         private Place mPlace;
         private String mTime;
+        private String mLicense;
+        private int numSeats;
 
-        public DriverInfo(Place place, String time) {
+        public DriverInfo(Place place, String time, String mLicense, int numSeats) {
             this.mPlace = place;
             this.mTime = time;
+            this.mLicense = mLicense;
+            this.numSeats = numSeats;
         }
 
         public Place getmPlace() {
@@ -163,6 +212,14 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
         public String getmTime() {
             return mTime;
+        }
+
+        public String getmLicense() {
+            return mLicense;
+        }
+
+        public int getNumSeats() {
+            return numSeats;
         }
     }
 }
