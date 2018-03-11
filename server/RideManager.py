@@ -1,12 +1,12 @@
 import json
 from urllib.request import Request, urlopen
 
-from .Driver import Driver
-from .Location import Location
-from .Query import Query
-from .Ride import Ride
-from .Rider import Rider
-from .User import User
+from Driver import Driver
+from Location import Location
+from Query import Query
+from Ride import Ride
+from Rider import Rider
+from User import User
 
 
 class RideManager:
