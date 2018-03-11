@@ -98,7 +98,7 @@ class RideManager:
     def send_request(self, query):
         url = 'https://api.routific.com/v1/vrp'
         headers = {"Content-Type": "application/json",
-                   "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YWE0MmQwMjI0MTNkZjE3MGQ2MmU5YTUiLCJpYXQiOjE1MjA3MDg4NjZ9.Oq9hYvFMDhJkU34tZ5Skf0gyIKaF8Wk2cg5YTYNywME"}
+                   "Authorization": "bearer"}
         request = Request(url, data=self.json_repr(query).encode(), headers=headers)
         return urlopen(request).read().decode()
 
