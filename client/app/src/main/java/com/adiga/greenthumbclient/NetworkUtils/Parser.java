@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.adiga.greenthumbclient.Pickup;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +25,20 @@ import java.util.Scanner;
 
 public class Parser {
     public static List<Pickup> makePickups(String s) {
-
+        List<Pickup> pickups = new ArrayList<>();
+        try {
+//            JSONArray stubbed_response = new JSONArray("[[\"6800 Cambie\", \"08:00\"], [\"800 Robson\", \"08:11\"], [\"3780 Arbutus\", \"08:23\"], [\"6133 University\", \"08:42\"]]");
+//            JSONArray response = stubbed_response;
+            JSONArray response = new JSONArray(s);
+            for (int j = 0; j < response.length(); j++) {
+                JSONArray jarray = (JSONArray) response.get(j);
+                pickups.add(new Pickup((String) jarray.get(0),
+                        (String) jarray.get(1)));
+            }
+            return pickups;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
     public static String parseResponse(BufferedReader in) throws IOException {

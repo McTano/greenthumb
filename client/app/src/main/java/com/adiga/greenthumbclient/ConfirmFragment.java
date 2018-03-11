@@ -84,8 +84,27 @@ public class ConfirmFragment extends Fragment implements View.OnClickListener, L
 
     private void setFieldsDriver() {
         identityText.setText("You are a DRIVER");
-        arrivalText.setText("Expected arrival time at UBC is " + mUser.arrivalTime);
+        String timeOut = "Expected arrival time at UBC is " + parseTime(mUser.getArrivalTime());
+        arrivalText.setText(timeOut);
         mapButton.setText("GET YOUR PICKUP ROUTE");
+    }
+
+    private String parseTime(String timeInput) {
+        boolean pm = false;
+        int value = Integer.parseInt(timeInput);
+
+        if (value == 0) {
+            return "12:00 am";
+        } else if (value == 12) {
+            return "12:00 pm";
+        }
+
+        if (value > 12) {
+            return String.valueOf(value-12) + ":00 pm";
+        } else {
+            return String.valueOf(value) + ":00 am";
+        }
+        
     }
 
     private void setFieldsRider() {
@@ -99,7 +118,7 @@ public class ConfirmFragment extends Fragment implements View.OnClickListener, L
         if (view.getId() == R.id.map_button) {
             Log.d("Confirm","CONFIRMED");
 
-            new QueryTask(this).execute("https://www.google.ca");
+            new QueryTask(this).execute("https://frozen-retreat-24308.herokuapp.com/users/400");
 
         }
 
@@ -150,7 +169,7 @@ public class ConfirmFragment extends Fragment implements View.OnClickListener, L
         List<Pickup> samplePickup = new ArrayList<>();
         samplePickup.add(new Pickup("My House","3:00 pm"));
 
-        ListAdapter adapter = new ListAdapter(samplePickup);
+        ListAdapter adapter = new ListAdapter(pickups);
 
         itemList.setAdapter(adapter);
 
