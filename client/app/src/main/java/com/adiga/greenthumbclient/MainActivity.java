@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import android.support.v4.app.FragmentManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity implements
         UserChoiceFragment.OnUserTypeSelectedListener, RiderChoiceFragment.OnRiderDetailsSelectedListener,
         DriverChoiceFragment.OnDriverDetailsSelectedListener{
@@ -94,7 +97,25 @@ public class MainActivity extends AppCompatActivity implements
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
         // TODO make request here
+        makeJSONData(mUser);
         setConfirmFragment();
+    }
+
+    private void makeJSONData(User mUser) {
+        JSONObject user = new JSONObject();
+        try {
+            user.put("start", mUser.getStartLocation());
+            user.put("dest", mUser.getDestination());
+            user.put("isDriver", mUser.getIsDriver());
+            user.put("seats", mUser.getSeats());
+            user.put("vehicle", mUser.getVehicle());
+            user.put("endTime", mUser.getArrivalTime());
+            user.put("id", mUser.getId());
+            JSONObject data = new JSONObject();
+            data.put("user", user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -102,10 +123,9 @@ public class MainActivity extends AppCompatActivity implements
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
         Driver driver = (Driver) mUser;
-        
         driver.setCarSeats(info.getNumSeats());
         driver.setLicensePlate(info.getmLicense());
-
+        makeJSONData(mUser);
         setConfirmFragment();
     }
 }

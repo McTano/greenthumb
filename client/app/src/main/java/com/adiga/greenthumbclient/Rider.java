@@ -9,6 +9,25 @@ public class Rider extends User {
     public Rider() {
     }
 
+    @Override
+    public boolean getIsDriver() {
+        return false;
+    }
+
+    @Override
+    public int getSeats() {
+        return 0;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public String getVehicle() {
+        return "";
+    }
 
 
 }

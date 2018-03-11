@@ -1,9 +1,9 @@
 {
 	"user":	{
 		"start": {
-			"lat": 12,
-			"lon": 99,
-			"address": "123 fake street"
+			"lat": 49.2474624,
+			"lon": -123.1532338,
+			"address": ""3780 Arbutus""
 		},
 		"dest": {
 			"lat": 12,

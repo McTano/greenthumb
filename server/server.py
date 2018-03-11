@@ -39,7 +39,3 @@ def get_user(user_id):
 	user = rideManager.get_user(int(user_id))
 	resp = rideManager.json_repr(user.ride.stops)
 	return resp
-
-# @app.route("/rides", methods=['GET'])
-# def findRides():
-# 	# return "get your own damn ride"

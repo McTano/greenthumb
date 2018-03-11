@@ -3,8 +3,6 @@ package com.adiga.greenthumbclient;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.Serializable;
-
 /**
  * Created by dbajj on 2018-03-10.
  */
@@ -50,4 +48,12 @@ public abstract class User {
     public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
+
+    public abstract boolean getIsDriver();
+
+    public abstract int getSeats();
+
+    public abstract int getId();
+
+    public abstract String getVehicle();
 }
