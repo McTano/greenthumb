@@ -10,8 +10,8 @@ public class Pickup {
     private String time;
 
     public Pickup(String location, String time) {
-        this.time = time;
         this.location = location;
+        this.time = time;
     }
 
     public String getLocation() {

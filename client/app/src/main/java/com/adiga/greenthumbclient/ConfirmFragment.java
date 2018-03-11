@@ -14,19 +14,28 @@ import android.widget.TextView;
 
 import com.adiga.greenthumbclient.NetworkUtils.Parser;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by dbajj on 2018-03-10.
  */
 
-public class ConfirmFragment extends Fragment {
+public class ConfirmFragment extends Fragment implements View.OnClickListener {
 
     boolean isDriver;
     User mUser;
     TextView identityText;
     TextView arrivalText;
     Button mapButton;
+    List<String> addresses;
+    List<String> pickup_times;
 
     public ConfirmFragment() {
 
@@ -48,6 +57,7 @@ public class ConfirmFragment extends Fragment {
         arrivalText = (TextView) view.findViewById(R.id.arrival_text);
 
         mapButton = (Button) view.findViewById(R.id.map_button);
+        mapButton.setOnClickListener(this);
         return view;
     }
 
@@ -98,7 +108,6 @@ public class ConfirmFragment extends Fragment {
 
             try {
                 String pickups = Parser.parseResponse(Parser.makeRequest(urlString));
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -110,3 +119,4 @@ public class ConfirmFragment extends Fragment {
 
 
 }
+

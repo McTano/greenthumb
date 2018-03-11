@@ -2,6 +2,7 @@ package com.adiga.greenthumbclient;
 
 import com.adiga.greenthumbclient.NetworkUtils.Parser;
 
+<<<<<<< HEAD
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.junit.Test;
@@ -11,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.adiga.greenthumbclient.NetworkUtils.Parser.makePickups;
+=======
+import org.junit.Test;
+
+import java.io.IOException;
+>>>>>>> master
 
 /**
  * Created by dbajj on 2018-03-10.
@@ -25,6 +31,7 @@ public class ParserTest {
         String contents = Parser.parseResponse(Parser.makeRequest(url));
 
     }
+<<<<<<< HEAD
 
     @Test
     public void testMakePickups() throws JSONException {
@@ -38,4 +45,6 @@ public class ParserTest {
 
     }
 
+=======
+>>>>>>> master
 }

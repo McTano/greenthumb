@@ -35,8 +35,6 @@ class RideManager:
             self.rides = []
             RideManager._instance = self
             self.find_rides()
-            print(self.json_repr(self.drivers))
-            print(self.json_repr(self.riders))
 
     def add_user(self, start, dest, isDriver, seats, vehicle, endTime, id):
         if isDriver:
@@ -106,7 +104,6 @@ class RideManager:
 
     def parse_response(self, response):
         parsed_json = json.loads(response)
-        print(parsed_json)
         solution = parsed_json["solution"]
         for name, route in solution.items():
             ride = Ride(int(name))

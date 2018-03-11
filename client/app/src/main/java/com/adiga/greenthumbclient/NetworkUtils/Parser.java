@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.adiga.greenthumbclient.Pickup;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +17,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,7 +45,6 @@ public class Parser {
         }
         return null;
     }
-
 
     public static String parseResponse(BufferedReader in) throws IOException {
         StringBuilder response = new StringBuilder();
