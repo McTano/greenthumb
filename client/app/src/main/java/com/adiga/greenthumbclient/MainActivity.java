@@ -101,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements
     public void onDriverDetailsSelected(DriverChoiceFragment.DriverInfo info) {
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
+        Driver driver = (Driver) mUser;
+        
+        driver.setCarSeats(info.getNumSeats());
+        driver.setLicensePlate(info.getmLicense());
 
         setConfirmFragment();
     }

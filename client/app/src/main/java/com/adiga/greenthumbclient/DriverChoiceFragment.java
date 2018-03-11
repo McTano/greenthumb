@@ -40,6 +40,7 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
     Spinner mSeats;
 
     private Place mPlace;
+    private int mSpinnerCount;
     private boolean timeSelected;
     private boolean licenseAdded;
     private boolean seatsSelected;
@@ -52,6 +53,8 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mSpinnerCount = 0;
 
         timeSelected = false;
         licenseAdded = false;
@@ -88,6 +91,8 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
         return layout;
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -138,7 +143,10 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
         } else if (view.getId() == R.id.confirm_button) {
             if (mPlace == null || timeSelected == false || seatsSelected ==  false || licenseAdded == false) {
-                Toast.makeText(getContext(),"Please select all fields before confirming",Toast.LENGTH_SHORT).show();
+                String warning = "Please select all fields before confirming";
+                String debug = "timeSelected " + timeSelected + " seatsSelected: " + seatsSelected +
+                        "licenseAdded: " + licenseAdded + " mPlace: " + mPlace;
+                Toast.makeText(getContext(),warning + debug,Toast.LENGTH_SHORT).show();
             } else {
                 String time = mSpinner.getSelectedItem().toString();
                 String simpleTime = parseTime(time);
@@ -167,7 +175,6 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
             if (resultCode == RESULT_OK) {
                 mPlace = PlacePicker.getPlace(getActivity(), data);
                 String location = mPlace.getAddress().toString();
-                Toast.makeText(getContext(), "RECEIVED", Toast.LENGTH_LONG).show();
                 mLocationButton.setText(location);
             }
         }
@@ -175,9 +182,13 @@ public class DriverChoiceFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (view.getId() == R.id.time_spinner) {
+        if (mSpinnerCount < 2) {
+            mSpinnerCount++;
+            return;
+        }
+        if (adapterView.getId() == R.id.time_spinner) {
             timeSelected = true;
-        } else if (view.getId() == R.id.seat_spinner) {
+        } else if (adapterView.getId() == R.id.seat_spinner) {
             seatsSelected = true;
         }
     }

@@ -11,6 +11,8 @@
         android:id="@+id/text_location"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
+        android:textSize="10pt"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -20,22 +22,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         android:text="@string/usertyperequeststring"
-        tools:text="Request question are you a driver or a rider"/>
+        tools:text="Are you a driver or a rider?"/>
 
     <Button
         android:id="@+id/driver_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="@string/driverbuttonstring"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_location"
         app:layout_constraintTop_toBottomOf="@+id/text_location"
-        android:text="@string/driverbuttonstring"
         tools:text="Driver" />
 
     <Button
         android:id="@+id/rider_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:text="@string/riderbuttonstring"
         app:layout_constraintEnd_toEndOf="@+id/text_location"
         app:layout_constraintTop_toTopOf="@+id/driver_button" />
