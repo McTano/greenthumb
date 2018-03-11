@@ -89,19 +89,17 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-
-
-
     @Override
     public void onRiderDetailsSelected(RiderChoiceFragment.RiderInfo info) {
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
+        JSONObject userData = makeJSONData(mUser);
         // TODO make request here
-        makeJSONData(mUser);
+
         setConfirmFragment();
     }
 
-    private void makeJSONData(User mUser) {
+    private JSONObject makeJSONData(User mUser) {
         JSONObject user = new JSONObject();
         try {
             user.put("start", mUser.getStartLocation());
@@ -116,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return user;
     }
 
     @Override
@@ -125,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements
         Driver driver = (Driver) mUser;
         driver.setCarSeats(info.getNumSeats());
         driver.setLicensePlate(info.getmLicense());
-        makeJSONData(mUser);
+        JSONObject userData = makeJSONData(mUser);
+        // TODO make request
         setConfirmFragment();
     }
 }

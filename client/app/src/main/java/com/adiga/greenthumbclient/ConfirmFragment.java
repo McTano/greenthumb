@@ -1,14 +1,20 @@
 package com.adiga.greenthumbclient;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.adiga.greenthumbclient.NetworkUtils.Parser;
+
+import java.io.IOException;
 
 /**
  * Created by dbajj on 2018-03-10.
@@ -73,4 +79,34 @@ public class ConfirmFragment extends Fragment {
         arrivalText.setText("Expected arrival time at UBC is " + mUser.arrivalTime);
         mapButton.setText("GET YOUR PICKUP LOCATION");
     }
+
+    public void onClick(View view) {
+        if (view.getId() == R.id.map_button) {
+            Log.d("Confirm","CONFIRMED");
+
+        }
+
+
+
+    }
+
+    class QueryTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            String urlString = strings[0];
+
+            try {
+                String pickups = Parser.parseResponse(Parser.makeRequest(urlString));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return true;
+        }
+    }
+
+
 }
