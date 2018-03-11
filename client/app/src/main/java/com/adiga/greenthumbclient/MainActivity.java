@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
         Driver driver = (Driver) mUser;
-        
+
         driver.setCarSeats(info.getNumSeats());
         driver.setLicensePlate(info.getmLicense());
 
