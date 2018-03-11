@@ -56,7 +56,12 @@ public class MainActivity extends AppCompatActivity implements
         DriverChoiceFragment riderChoiceFragment = new DriverChoiceFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,riderChoiceFragment).commit();
     }
+    private void setConfirmFragment() {
+        ConfirmFragment confirmFragment = new ConfirmFragment();
+        confirmFragment.setUser(mUser);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,confirmFragment).commit();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -81,9 +86,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void setConfirmFragment() {
 
-    }
 
 
     @Override
@@ -98,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements
     public void onDriverDetailsSelected(DriverChoiceFragment.DriverInfo info) {
         mUser.setStartLocation(info.getmPlace().getLatLng());
         mUser.setArrivalTime(info.getmTime());
+        Driver driver = (Driver) mUser;
+        
+        driver.setCarSeats(info.getNumSeats());
+        driver.setLicensePlate(info.getmLicense());
 
         setConfirmFragment();
     }

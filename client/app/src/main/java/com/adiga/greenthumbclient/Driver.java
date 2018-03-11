@@ -17,4 +17,19 @@ public class Driver extends User  {
         super();
     }
 
+    public int getCarSeats() {
+        return carSeats;
+    }
+
+    public void setCarSeats(int carSeats) {
+        this.carSeats = carSeats;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
 }
